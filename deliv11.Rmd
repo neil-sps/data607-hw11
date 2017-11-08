@@ -1,0 +1,40 @@
+---
+title: "Recommender system on edx.org"
+author: "n.hwang"
+date: "`r Sys.Date()`"
+output:
+  prettydoc::html_pretty:
+    theme: architect
+    highlight: github
+    show depth: 4
+    toc: yes 
+    toc_float: no
+---
+
+## Scenario Design
+
+(1) Target users at [**edX.org**](http://www.edx.org/) are a wide spectrum of learners, including students of all grades, working professionals, worker training teams at corporations, and individuals between jobs. 
+
+(2) The target users' key goals could include gaining a new skill for a career change, bolstering their current classes at their current institutions, filling knowledge gaps, preparing for interviews, and materials for training sessions, to name just a few. 
+
+(3) [**edX.org**](http://www.edx.org/) helps individual users by delivering verifiable, high-quality instructional material for courses directly relevant for their educational and career goals. 
+
+If the target user is an organization rather than an individual, [**edX.org**](http://www.edx.org/) may need to go through the scenario design twice since the two levels of users may have different goals: once at the target user organizational level; then, again at the individual end user level. 
+
+## Reverse engineering recommender system
+
+One of my friends from high school co-founded [**edX.org**](http://www.edx.org/) in 2012, and since then, I have been an active user of the site, auditing and completing various courses there from the beginning (starting with the Circuits and Electronics course back in 2013!) I have been taking a wide variety of courses, ranging from history to economics to EE. From their weekly emails with the subject line `12 Recommended Courses for ...` and my experience interacting with the recommendations on the website, [**edX.org**](http://www.edx.org/) appears to be using a recommender system more similar to item-to-item collaborative filtering than clustering or the traditional collaborative filtering. 
+
+First, the fact that I am a regular user of the site who is in higher education by trade does not appear to play much role. [**edX.org**](http://www.edx.org/) knows of my occupation, but none of the 12 recommended courses are, for instance, in fields like psychology, learning theory, education technology, etc. Further, [**edX.org**](http://www.edx.org/) does not seem to base its recommendations on the fact that I am more experienced than most of the typical users of the site, judging from the large number of introductory courses in the recommendations, such as `Introduction to Japanese`. Also, the specific recommendations based on my browsing and enrollment were quite responsive in real-time. 
+Hence, it appears that [**edX.org**](http://www.edx.org/) does not match user to similar learners
+
+Next, rather than matching user traits, [**edX.org**](http://www.edx.org/) appears to be matching "items" to use Amazon speak. Most of the recommended courses are similar to those I have either taken before, such as music, philosophy, and history, or have explored to learn more about but did not enroll, such as policy management and business analytics. 
+
+Among those that I have taken before, it appears to place more emphasis more recent courses and those that I have completed, rather than those I have audited. For instance, I recently completed a course on work-life balance, and the top recommendation for me is `Get Beyond Work-Life Balance`.
+
+Lastly, judging from the sheer speed of the recommendations that reflect the most recent browsing history on the website, I would infer that [**edX.org**](http://www.edx.org/) is sampling from the database, rather than looking at the whole population. Given its 10million+ user base and 1,300+ courses, it is unlikely that a item-to-item filtering on the whole userbase is taking place.
+
+## Improving the Recommender System
+As discussed above, [**edX.org**](http://www.edx.org/) could incorporate user traits in its algorithm to make the recommendations more relevant for its target users. While the item-to-item corraborative filtering has its merits, not incorporating the user-specific traits can turn target users off to a degree that they may ignore the value of the recommendations. This is possible since [**edX.org**](http://www.edx.org/) is aware of the demographic and professional backgrounds of its user base. 
+
+As mentioned above, for instance, I am among the more experienced user body based on work experience and education, yet the several of the recommended courses assume that I would make a career change into playing a musical instrument (`Music as a Career`) or go into business (`Business Fundamentals`). Obviously, someone with an MBA that has made a career in finance would not be interested in such courses. 
